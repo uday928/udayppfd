@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        input[type="submit"],
+        button {
+            width: 150px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #45a049;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script defer>
+        function clearForm() {
+            document.getElementById("studentForm").reset();
+        }
+    </script>
+</head>
+<body>
+    <h1>Add Student</h1>
+    <form action="/add_student" method="POST" id="studentForm">
+        <label for="rollno">Roll No:</label>
+        <input type="text" id="rollno" name="rollno">
+        <label for="stdname">Name:</label>
+        <input type="text" id="stdname" name="stdname">
+        <label for="course">Course:</label>
+        <input type="text" id="course" name="course">
+        <label for="duration">Duration:</label>
+        <input type="text" id="duration" name="duration">
+        <div class="button-group">
+            <input type="submit" value="Submit">
+            <button type="button" onclick="clearForm()">Clear</button>
+        </div>
+    </form>
+    
+    <h2>Student List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Roll No</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.rollno }}</td>
+                <td>{{ student.stdname }}</td>
+                <td>{{ student.course }}</td>
+                <td>{{ student.duration }}</td>
+                <td>
+                    <button onclick="editStudent('{{ student.rollno }}', '{{ student.stdname }}', '{{ student.course }}', '{{ student.duration }}')">Edit</button>
+                    <form action="/delete_student/{{ student.rollno }}" method="POST" style="display: inline;">
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form action="/delete_students" method="POST">
+        <input type="submit" value="Delete All Students">
+    </form>
+    <script>
+        function editStudent(rollno, stdname, course, duration) {
+            document.getElementById("rollno").value = rollno;
+            document.getElementById("stdname").value = stdname;
+            document.getElementById("course").value = course;
+            document.getElementById("duration").value = duration;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div class="p-3 mb-2 bg-success text-white">
+<form action="/SaveEmp" method="Post">
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-2"> 
+            <div class="form-group">
+            <label for="Eno">Employee Number:</label>
+                <input type="text" class="form-control"  name="Eno"  id="Eno" placeholder="Enter Employee no">    
+            </div>
+        </div>
+
+        <div class="col-md-3"> 
+            <div class="form-group">
+            <label for="Ename">Employee Name:</label>
+                <input type="text" class="form-control" name="Ename" id="Ename" placeholder="Employee name">    
+            </div>
+        </div>
+
+        <div class="col-md-2"> 
+            <div class="form-group">
+            <label for="Basic">Basic:</label>
+                <input type="text" class="form-control" name="Basic"  id="Basic" placeholder="Enter basic">    
+            </div>
+        </div>
+
+        <div class="col-md-2"> 
+            <div class="form-group">
+            <label for="Dno">Department:</label>
+                <input type="text" class="form-control" name="Dno"  id="Dno" placeholder="Department no">    
+            </div>
+        </div>
+
+    </div>
+    <div class="mt-2">
+        <button type="submit">SaveEmp</button>
+    </div>
+</div>
+</form>
+
+</div>
+
+<div class="container">
+    <div class="p-3 mb-2 bg-info text-dark">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Eno</th>
+            <th scope="col">Ename</th>
+            <th scope="col">Basic</th>
+            <th scope="col">Department</th>
+            <th scope="col">Operation</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in allEmp %}
+          <tr>
+
+            <th scope="row">{{ e.Eno }}</th>
+            <td>{{ e.Ename }}</td>
+            <td>{{ e.Basic }}</td>
+            <td>{{ e.Dno }}</td>
+            <td>
+                <form action="/delete_emp/{{e.Eno}}" method="POST">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <a href="/EditEmp/{{e.Eno}}"><button class="btn btn-primary">Edit</button></a>
+            </td>
+            
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col">
+            <!-- Show all button -->
+            <form action="/show_all" method="GET">
+                <button type="submit" class="button">Show All</button>
+            </form>
+        </div>
+        <div class="col">
+            <!-- Delete all button -->
+            <form action="/delete_all" method="POST">
+                <button type="submit" class="button">Delete All</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
