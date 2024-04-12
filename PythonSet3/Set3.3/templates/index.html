@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload and Download</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>File Upload</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button type="submit" class="styled-button">Upload</button>
+    </form>
+    <h1>File download</h1>
+    <form action="/download" method="download" enctype="multipart/form-data">
+        <button type="download" class="styled-button">Download</button>
+    </form>
+    
+</body>
+</html>

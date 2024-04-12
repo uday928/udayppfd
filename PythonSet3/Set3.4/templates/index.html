@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Display</title>
+    <style>
+        *{
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .table{
+            background-color: aqua;
+            border: 1px solid black;
+            height: 250px;
+            width: 250px;
+            font-size: larger;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Display</h1>
+    <form action="/" method="get">
+        <select name="source">
+            <option value="database">From Database</option>
+            <option value="excel">From Excel</option>
+        </select>
+        <button type="submit">Fetch Data</button>
+    </form>
+    <table border="1" class="table">
+        <thead>
+            <tr>
+                {% for header in headers %}
+                <th>{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                {% for item in row %}
+                <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

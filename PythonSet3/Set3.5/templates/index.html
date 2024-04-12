@@ -1,0 +1,69 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Input</title>
+    <style>
+        *{
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .styled-button {
+            background-color: rgb(247, 132, 90); /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            border-radius: 8px;
+        }
+        
+        .styled-button:hover {
+            background-color: rgb(249, 98, 44); /* Darker Green */
+        }
+        
+        .styled-button:active {
+            background-color: rgb(227, 89, 39); /* Slightly darker Green */
+        }
+    </style>
+</head>
+<body>
+    <h1>User Input Form</h1>
+    <form id="inputForm">
+        <label for="textInput">Enter some text:</label>
+        <input type="text" id="textInput" name="userInput" required>
+        <button type="submit" class="styled-button">Submit</button>
+    </form>
+
+    <div id="response"></div>
+
+    <script>
+        document.getElementById("inputForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            var userInput = document.getElementById("textInput").value;
+
+            // Send the user input to the server-side script
+            fetch("/process_input", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userInput: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("response").innerText = data.message;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
